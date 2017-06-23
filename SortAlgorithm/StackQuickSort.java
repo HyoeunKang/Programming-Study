@@ -4,17 +4,17 @@ import java.util.Arrays;
 import java.util.Stack;
 
 /*
- * QuickSort¸¦ ºñÀç±Í¹æ½ÄÀ¸·Î?
- * - ¸¸ÀÏ ÀÔ·Â µ¥ÀÌÅÍ ÀÚ·á°¡ ¸¹´Ù¸é ½ºÅÃ ¿À¹öÇÃ·Î¿ì°¡ ÀÏ¾î³¯ ¼öµµ ÀÖ´Ù.
- * - ÇØ°á¹ı : ¼øÈ¯ È£Ãâ¹ı ±¸Çö
- * 			    - ÀÚÃ¼ÀûÀ¸·Î ½ºÅÃÀ» ¸¸µé¾î¼­ ÇØ°á
+ * QuickSortë¥¼ ë¹„ì¬ê·€ë°©ì‹ìœ¼ë¡œ?
+ * - ë§Œì¼ ì…ë ¥ ë°ì´í„° ìë£Œê°€ ë§ë‹¤ë©´ ìŠ¤íƒ ì˜¤ë²„í”Œë¡œìš°ê°€ ì¼ì–´ë‚  ìˆ˜ë„ ìˆë‹¤.
+ * - í•´ê²°ë²• : ìˆœí™˜ í˜¸ì¶œë²• êµ¬í˜„
+ * 			    - ìì²´ì ìœ¼ë¡œ ìŠ¤íƒì„ ë§Œë“¤ì–´ì„œ í•´ê²°
  */
 public class StackQuickSort {
 
 	public static void main(String[] args) {
 		int[] arr = {5, 2, 6, 1, 3, 4};
 		QuickSort(arr,  arr.length-1);
-		System.out.println("Á¤´ä:\t"+Arrays.toString(arr));
+		System.out.println("ì •ë‹µ:\t"+Arrays.toString(arr));
 	}
 	static void QuickSort(int[] arr, int n){
 	 Stack<Integer> stack = new Stack<Integer>();
@@ -48,11 +48,13 @@ public class StackQuickSort {
 			 arr[first] = arr[right];
 			 arr[right] = temp;
 		 }
-		 System.out.printf("Á¤·Ä ÈÄ left:%d, right:%d, pivot:%d \n",left,right,pivot);
+		 System.out.printf("ì •ë ¬ í›„ left:%d, right:%d, pivot:%d \n",left,right,pivot);
 		System.out.println(Arrays.toString(arr));
 		
 		if(left==right) break;
 		
+		//ìŠ¤íƒì— ë„£ì„ ë•Œ ì£¼ì˜í•˜ê¸°
+		//í˜„ì¬ rightìë¦¬ê°€ ìƒˆë¡œìš´ pivot ìë¦¬ì´ë‹¤.46~49ì—ì„œ ìŠ¤ì™‘ì„ í–ˆê¸° ë•Œë¬¸ì´ë‹¤.
 		 stack.push(right+1);
 		 stack.push(last);
 		 stack.push(right-1);
