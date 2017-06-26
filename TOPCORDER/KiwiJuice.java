@@ -15,13 +15,24 @@ public class KiwiJuice {
 			int f = fromId[i];
 			int t = toId[i];
 			
-			if((bottles[t]+bottles[f])<=capacities[t]){
-				bottles[t] += bottles[f];
-				bottles[f] = 0;
-			}else{
-				bottles[f] -= (capacities[t]-bottles[t]);
-				bottles[t] = capacities[t];				
-			}
+			/*if((bottles[t]+bottles[f])<=capacities[t]){
+			bottles[t] += bottles[f];
+			bottles[f] = 0;
+		}else{
+			bottles[f] -= (capacities[t]-bottles[t]);
+			bottles[t] = capacities[t];				
+		}	이 조건문을 줄여보자. */
+			
+			//즉, toId[i]에 들어갈 양은 다음과 같이 정할 수 있다.
+			//주입양<=보틀의 여유일 경우 
+			//주입양>보틀의 여유일 경우
+			
+			//vol에는 더 작은값이 들어갈 것이다.
+			int vol = Math.min(bottles[f], capacities[t]-bottles[t]);
+			System.out.println("vol: "+vol);
+			bottles[f] -= vol; //bottles[f]가 담기거나, 옮겨간 양(capacities[t]-bottles[t])만큼 담길 것이다.
+			bottles[t]+=vol;
+			
 		}
 		return bottles;
 	}
