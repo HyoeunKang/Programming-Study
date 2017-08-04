@@ -1,5 +1,7 @@
 package acmicp;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,23 +39,27 @@ public class Q2583 {
 	static int[] dy={0,0,1,-1};
 	static int label=1;
 	static int N,M;
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	static int x1,x2,y1,y2;
+	
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+     		String[] temp = br.readLine().trim().split(" ");
 		
 		int K=0;
 
-		M= sc.nextInt();
-		N= sc.nextInt();
-		K= sc.nextInt();
+		M= Integer.parseInt(temp[0]);
+		N= Integer.parseInt(temp[1]);
+		K= Integer.parseInt(temp[2]);
 		
 		int[][] map = new int[N][M];
 		
 		//2차원 배열에 직사각형 표시
 		for(int a=0; a<K; a++){
-			int x1 = sc.nextInt();
-			int y1 = sc.nextInt();
-			int x2 = sc.nextInt();
-			int y2 = sc.nextInt();
+		    temp = br.readLine().trim().split(" ");
+		    x1 = Integer.parseInt(temp[0]);
+	            y1 = Integer.parseInt(temp[1]);
+	            x2 = Integer.parseInt(temp[2]);
+	            y2 = Integer.parseInt(temp[3]);
 		
 			for(int w=(x2-1); w>=x1; w--){
 				for(int h=(y2-1); h>=y1; h--){
