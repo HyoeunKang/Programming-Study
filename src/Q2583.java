@@ -1,5 +1,4 @@
 package acmicp;
-//!!!
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,6 +6,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+class Pair{
+	int x, y;
+	
+	Pair(){}
+	Pair(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+}
 /*
  * M, N과 K 그리고 K개의 직사각형의 좌표가 주어질 때, K개의 직사각형 내부를 제외한 나머지 부분이 몇 개의 분리된 영역으로 나누어지는지, 
  * 그리고 분리된 각 영역의 넓이가 얼마인지를 구하여 이를 출력하는 프로그램을 작성하시오.
@@ -24,8 +32,7 @@ public class Q2583 {
  * 3. 2번 과정을 통해 표시한 영역의 넓이를 구해 결과 출력
  */
 	static HashMap<Integer, Integer> result = new HashMap<Integer, Integer>();
-	static Queue<Integer> qx = new LinkedList<Integer>();
-	static Queue<Integer> qy = new LinkedList<Integer>(); 
+	static Queue<Pair> q = new LinkedList<Pair>();
 	static int[] dx={1,-1,0,0};
 	static int[] dy={0,0,1,-1};
 	static int label=1;
@@ -81,14 +88,9 @@ public class Q2583 {
 		map[x][y]=label;
 		
 		result.put(label, 1);
-	/*	Queue<Integer> qx = new LinkedList<Integer>();
-		Queue<Integer> qy = new LinkedList<Integer>();
-		*/
-		qx.clear();
-		qy.clear();
-		
-		qx.add(x);
-		qy.add(y);
+		q.clear();
+	
+		q.add(new Pair(x,y));
 		
 		while(!qx.isEmpty()){
 			int nx = qx.poll();
@@ -103,8 +105,7 @@ public class Q2583 {
 					map[nextx][nexty]=label;
 					
 					result.put(label, result.get(label)+1);
-					qx.add(nextx);
-					qy.add(nexty);
+						q.add(new Pair(nextx, nexty));
 				}
 			}
 		}
