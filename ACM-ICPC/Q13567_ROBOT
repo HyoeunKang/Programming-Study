@@ -13,22 +13,22 @@ import java.util.StringTokenizer;
  * 
  * -->맵 자체를 왼쪽으로 돌려서 생각해보자. 결과는 같다.	
  */
-class Pair{
+/*class Pair{
 	int x, y; 	 //현재 좌표 
-	char direct; //현재 방향
+	int direct; //현재 방향
 	Pair(){}
 	
-	Pair(int x, int y, char direct){
+	Pair(int x, int y, int direct){
 		this.x = x;
 		this.y = y;
 		this.direct = direct;
 	}
-}
+}*/
 public class Robot {
 	static int[][] map;
 	static int m;
-	static char[] direct={'U','D','R', 'L'};
-	static Pair sp = new Pair(0,0,'D');
+	static int[] direct={0,1,2,3}; //상,우,하,좌;
+	static int[] sp = {0,0,2};
 	
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -39,78 +39,52 @@ public class Robot {
 		
 		map = new int[m+1][m+1];	
 		
-		boolean result=false;
+		int result=0;
 		for(int i=0; i<n; i++){
 			temp=br.readLine().trim().split(" ");
-			result=solution(temp[0],Integer.parseInt(temp[1]));
-			if(!result) {
+			solution(temp[0],Integer.parseInt(temp[1]));
+			//System.out.println("i:"+i+","+sp.x+","+sp.y);
+		
+			if(0>sp[0]||sp[0]>m||0>sp[1]||sp[1]>m){
+				result=-1;
 				break;
 			}
 		}
-		if((0<=sp.x&&sp.x<=m)&&(0<=sp.y&&sp.y<=m)){
-			System.out.println(sp.x+" "+sp.y);
-		}else{
+		if(result==-1){
 			System.out.println("-1");
+		}else{
+			System.out.println(sp[0]+" "+sp[1]);
 		}
 	}
-	static boolean solution(String cmd, int c){
-		char d = sp.direct;
+	static void solution(String cmd, int c){
+		int d = sp[2];
 		
 		if(cmd.equals("MOVE")){
 			switch(d){
-				case 'U':
-					sp.x-=c;
+				case 0:
+					sp[0]-=c;
 					break;
-				case 'D':
-					sp.x += c;
+				case 1:
+					sp[1] += c;
 					break;
-				case 'R':
-					sp.y += c;
+				case 2:
+					sp[0] += c;
 					break;
-				case 'L':
-					sp.y -= c;
-					break;
-			}
-			return true;
-		}
-		
-		if(cmd.equals("TURN")&&c==0){
-			switch(d){
-				case 'U':
-					sp.direct='L';
-					break;
-				case 'D':
-					sp.direct='R';
-					break;
-				case 'R':
-					sp.direct='U';
-					break;
-				case 'L':
-					sp.direct='D';
+				case 3:
+					sp[1] -= c;
 					break;
 			}
 		}
 		
-		if(cmd.equals("TURN")&&c==1){
-			switch(d){
-			case 'U':
-				sp.direct='R';
-				break;
-			case 'D':
-				sp.direct='L';
-				break;
-			case 'R':
-				sp.direct='D';
-				break;
-			case 'L':
-				sp.direct='U';
-				break;
+		if(cmd.equals("TURN")){
+			if(c==0){
+				if(d==0) sp[2]=3; 
+				else sp[2]--;
+			}else{
+				if(d==3) sp[2]=0;
+				else sp[2]++;
 			}
 		}
-		if((0<=sp.x&&sp.x<=m)&&(0<=sp.y&&sp.y<=m)){
-			return true;
-		}
-		return false;
 	}
 
 }
