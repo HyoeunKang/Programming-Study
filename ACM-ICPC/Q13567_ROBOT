@@ -1,0 +1,116 @@
+package Acmicpc;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+/*13567번 로봇
+ * MOVE 직진
+ * TURN 0 왼쪽으로 90도회전
+ * TURN 1 오른쪽으로 90도 회전
+ * 시작은 (0, 0) 
+ * 
+ * -->맵 자체를 왼쪽으로 돌려서 생각해보자. 결과는 같다.	
+ */
+class Pair{
+	int x, y; 	 //현재 좌표 
+	char direct; //현재 방향
+	Pair(){}
+	
+	Pair(int x, int y, char direct){
+		this.x = x;
+		this.y = y;
+		this.direct = direct;
+	}
+}
+public class Robot {
+	static int[][] map;
+	static int m;
+	static char[] direct={'U','D','R', 'L'};
+	static Pair sp = new Pair(0,0,'D');
+	
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] temp = br.readLine().trim().split(" ");
+		
+		m = Integer.parseInt(temp[0]);//정사각형 한 변의 길이
+		int n = Integer.parseInt(temp[1]);//수행할 명령어 갯수
+		
+		map = new int[m+1][m+1];	
+		
+		boolean result=false;
+		for(int i=0; i<n; i++){
+			temp=br.readLine().trim().split(" ");
+			result=solution(temp[0],Integer.parseInt(temp[1]));
+			if(!result) {
+				break;
+			}
+		}
+		if((0<=sp.x&&sp.x<=m)&&(0<=sp.y&&sp.y<=m)){
+			System.out.println(sp.x+" "+sp.y);
+		}else{
+			System.out.println("-1");
+		}
+	}
+	static boolean solution(String cmd, int c){
+		char d = sp.direct;
+		
+		if(cmd.equals("MOVE")){
+			switch(d){
+				case 'U':
+					sp.x-=c;
+					break;
+				case 'D':
+					sp.x += c;
+					break;
+				case 'R':
+					sp.y += c;
+					break;
+				case 'L':
+					sp.y -= c;
+					break;
+			}
+			return true;
+		}
+		
+		if(cmd.equals("TURN")&&c==0){
+			switch(d){
+				case 'U':
+					sp.direct='L';
+					break;
+				case 'D':
+					sp.direct='R';
+					break;
+				case 'R':
+					sp.direct='U';
+					break;
+				case 'L':
+					sp.direct='D';
+					break;
+			}
+		}
+		
+		if(cmd.equals("TURN")&&c==1){
+			switch(d){
+			case 'U':
+				sp.direct='R';
+				break;
+			case 'D':
+				sp.direct='L';
+				break;
+			case 'R':
+				sp.direct='D';
+				break;
+			case 'L':
+				sp.direct='U';
+				break;
+			}
+		}
+		if((0<=sp.x&&sp.x<=m)&&(0<=sp.y&&sp.y<=m)){
+			return true;
+		}
+		return false;
+	}
+
+}
