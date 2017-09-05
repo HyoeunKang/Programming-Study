@@ -1,0 +1,33 @@
+public class SquareArea {
+
+	public static void main(String[] args) {
+		System.out.println(solution(new int[][] {{0,1,1,1},{1,1,1,1},{1,1,1,1},{0,0,1,0}}));
+
+	}
+	 static public int solution(int [][]board)
+	    {
+		 	int row = board.length;
+	        int col = board[0].length;
+	        int answer = 0;
+	       
+	        int[][] dp = new int[row+1][col+1];
+	        
+	        //0이면 의미없음
+	        //좌표(i,j) 값이 1이라면 dp[i][j]=1 + min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+	        //정사각형 조건이 안된다는 것은 범위 내 0이 하나라도 있음
+	        for(int i=1; i<=row; i++){
+	            for(int j=1; j<=col; j++){
+	                if(board[i-1][j-1]==0)	continue;
+	                dp[i][j]+=1+min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+	                answer=answer<dp[i][j]?dp[i][j]:answer;
+	            }
+	        }
+	        
+	        return answer*answer;
+	    }
+	    static public int min(int n1, int n2, int n3){
+	    	int min = n1<n2?n1:n2;
+	      
+	        return min<n3?min:n3;
+	    }
+}
